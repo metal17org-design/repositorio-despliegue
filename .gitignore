@@ -1,0 +1,3 @@
+# no subir claves reales
+envs/.env.production
+*.log

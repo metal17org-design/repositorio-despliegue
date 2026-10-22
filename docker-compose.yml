@@ -1,0 +1,27 @@
+# Servicios de la aplicacion (ejemplo basico)
+services:
+  app:
+    build: .
+    container_name: app_web
+    env_file:
+      - ./envs/.env.${ENTORNO:-production}
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mysql:8
+    container_name: ${DB_CONTAINER}
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  db_data:
